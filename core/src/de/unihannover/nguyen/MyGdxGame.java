@@ -18,6 +18,8 @@ public class MyGdxGame extends Game {
     @Override
     public void create () {
         batch = new SpriteBatch();
+        Assets.load();
+
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
         setScreen(new TitleScreen(this));

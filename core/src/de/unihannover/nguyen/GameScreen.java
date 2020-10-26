@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,7 +12,6 @@ public class GameScreen extends ScreenAdapter {
 
     MyGdxGame game;
     GameThread gameThread;
-
 
     float circleX = 300;
     float circleY = 150;
@@ -55,7 +55,7 @@ public class GameScreen extends ScreenAdapter {
             game.setScreen(new GameOverScreen(game));
         }
 
-        int rectSize = 30;
+        final int rectSize = 30;
 
         // 18 is the game height. 1
 
@@ -68,6 +68,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        game.batch.begin();
         for(int x = 0; x < gameThread.getSIZE_X(); x++) {
             for(int y = 0; y < gameThread.getSIZE_Y(); y++) {
                 if(map[x][y] ==  GameState.ONE) {
@@ -76,9 +77,13 @@ public class GameScreen extends ScreenAdapter {
                             (18-1-y) * rectSize, rectSize, rectSize);
                 }
                 if(map[x][y] ==  GameState.TWO) {
-                    game.shapeRenderer.setColor(0,0,1,1);
-                    game.shapeRenderer.rect(x * rectSize,
-                            (18-1-y) * rectSize, rectSize, rectSize);
+//                    game.shapeRenderer.setColor(0,0,1,1);
+//                    game.shapeRenderer.rect(x * rectSize,
+//                            (18-1-y) * rectSize, rectSize, rectSize);
+                    game.batch.draw(Assets.snakeSprite,
+                        x*rectSize,(18-1-y)*rectSize,rectSize,rectSize);
+//                    game.batch.draw(Assets.snakeSprite2,
+//                        15+x*rectSize,(18-1-y)*rectSize,rectSize,rectSize);
                 }
                 if(map[x][y] ==  GameState.BEACON) {
                     game.shapeRenderer.setColor(0,1,0,1);
@@ -89,6 +94,26 @@ public class GameScreen extends ScreenAdapter {
             }
         }
 
+        // experimental, comment please
+
+        for(int x = 0; x < gameThread.getSIZE_X(); x++) {
+            for(int y = 0; y < gameThread.getSIZE_Y(); y++) {
+                if(map[x][y] ==  GameState.TWO) {
+//                    game.shapeRenderer.setColor(0,0,1,1);
+//                    game.shapeRenderer.rect(x * rectSize,
+//                            (18-1-y) * rectSize, rectSize, rectSize);
+//                    game.batch.draw(Assets.snakeSprite,
+//                        x*rectSize,(18-1-y)*rectSize,rectSize,rectSize);
+                    game.batch.setColor(1,1,1,0.1f);
+                    game.batch.draw(Assets.sprite,
+                        15+x*rectSize,(18-1-y)*rectSize);
+                    game.batch.setColor(1,1,1,1f);
+                }
+//                    game.shapeRenderer.circle(x*rectSize,y*rectSize,rectSize);
+            }
+        }
+
+        game.batch.end();
         game.shapeRenderer.end();
 
 //
@@ -110,6 +135,7 @@ public class GameScreen extends ScreenAdapter {
 //        game.shapeRenderer.setColor(0, 1, 0, 1);
 //        game.shapeRenderer.circle(circleX, circleY, 75);
 //        game.shapeRenderer.end();
+        System.out.println("FPS: "+Gdx.graphics.getFramesPerSecond());
 
     }
 
