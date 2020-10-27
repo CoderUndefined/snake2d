@@ -104,10 +104,16 @@ public class GameScreen extends ScreenAdapter {
 //                            (18-1-y) * rectSize, rectSize, rectSize);
 //                    game.batch.draw(Assets.snakeSprite,
 //                        x*rectSize,(18-1-y)*rectSize,rectSize,rectSize);
-                    game.batch.setColor(1,1,1,0.1f);
-                    game.batch.draw(Assets.sprite,
-                        15+x*rectSize,(18-1-y)*rectSize);
-                    game.batch.setColor(1,1,1,1f);
+
+                    // if too many objects spawn, its a CPU bottleneck, too many drawcalls?
+                    // can handle up to a million sprites?!
+
+                    for(int i = 0; i < 1; i++) {
+                        game.batch.setColor(1,1,1,0.5f);
+                        game.batch.draw(Assets.sprite,
+                            i*0.01f+15+x*rectSize,i*0.01f+(18-1-y)*rectSize);
+                        game.batch.setColor(1,1,1,1f);
+                    }
                 }
 //                    game.shapeRenderer.circle(x*rectSize,y*rectSize,rectSize);
             }
