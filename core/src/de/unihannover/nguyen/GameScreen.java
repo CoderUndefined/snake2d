@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
+
 public class GameScreen extends ScreenAdapter {
 
     MyGdxGame game;
@@ -55,7 +56,7 @@ public class GameScreen extends ScreenAdapter {
             game.setScreen(new GameOverScreen(game));
         }
 
-        final int rectSize = 30;
+        final int rectSize = 20*3;
 
         // 18 is the game height. 1
 
@@ -108,10 +109,13 @@ public class GameScreen extends ScreenAdapter {
                     // if too many objects spawn, its a CPU bottleneck, too many drawcalls?
                     // can handle up to a million sprites?!
 
-                    for(int i = 0; i < 1; i++) {
+                    for(int i = 0; i < 1000; i++) {
                         game.batch.setColor(1,1,1,0.5f);
                         game.batch.draw(Assets.sprite,
-                            i*0.01f+15+x*rectSize,i*0.01f+(18-1-y)*rectSize);
+                            i*0.01f+15+x*rectSize,
+                            i*0.01f+(18-1-y)*rectSize,
+                            rectSize,
+                            rectSize);
                         game.batch.setColor(1,1,1,1f);
                     }
                 }
