@@ -27,6 +27,10 @@ public class TitleScreen extends ScreenAdapter {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
+                if(keycode == Input.Keys.E) {
+                    Gdx.graphics.setWindowedMode(1280,720);
+                    return true;
+                }
                 if(keycode == Input.Keys.SPACE) {
                     game.setScreen(new GameScreen(game));
                     return true;

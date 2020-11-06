@@ -50,8 +50,17 @@ public class GameScreen extends ScreenAdapter {
         });
     }
 
+    float runTime = 0.0f;
+
     @Override
     public void render(float delta) {
+        runTime = runTime + delta;
+        actualRender(runTime);
+    }
+
+
+    private void actualRender(float runTime) {
+
         if(!gameThread.isActive()) {
             game.setScreen(new GameOverScreen(game));
         }
@@ -75,7 +84,7 @@ public class GameScreen extends ScreenAdapter {
                 if(map[x][y] ==  GameState.ONE) {
                     game.shapeRenderer.setColor(1,0,0,1);
                     game.shapeRenderer.rect(x * rectSize,
-                            (18-1-y) * rectSize, rectSize, rectSize);
+                        (18-1-y) * rectSize, rectSize, rectSize);
                 }
                 if(map[x][y] ==  GameState.TWO) {
 //                    game.shapeRenderer.setColor(0,0,1,1);
@@ -89,7 +98,7 @@ public class GameScreen extends ScreenAdapter {
                 if(map[x][y] ==  GameState.BEACON) {
                     game.shapeRenderer.setColor(0,1,0,1);
                     game.shapeRenderer.rect(x * rectSize,
-                            (18-1-y) * rectSize, rectSize, rectSize);
+                        (18-1-y) * rectSize, rectSize, rectSize);
                 }
 //                    game.shapeRenderer.circle(x*rectSize,y*rectSize,rectSize);
             }
@@ -109,9 +118,9 @@ public class GameScreen extends ScreenAdapter {
                     // if too many objects spawn, its a CPU bottleneck, too many drawcalls?
                     // can handle up to a million sprites?!
 
-                    for(int i = 0; i < 1000; i++) {
+                    for(int i = 0; i < 1; i++) {
                         game.batch.setColor(1,1,1,0.5f);
-                        game.batch.draw(Assets.sprite,
+                        game.batch.draw(Assets.animation.getKeyFrame(runTime),
                             i*0.01f+15+x*rectSize,
                             i*0.01f+(18-1-y)*rectSize,
                             rectSize,
