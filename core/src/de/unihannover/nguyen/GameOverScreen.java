@@ -20,7 +20,7 @@ public class GameOverScreen extends ScreenAdapter{
             @Override
             public boolean keyDown(int keyCode) {
                 if (keyCode == Input.Keys.ENTER) {
-                    game.setScreen(new TitleScreen(game));
+                    game.setScreen(new TitleScreenOne(game));
                 }
                 return true;
             }

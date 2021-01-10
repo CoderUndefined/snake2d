@@ -22,7 +22,7 @@ public class EndScreen extends ScreenAdapter {
             public boolean keyDown(int keyCode) {
 
                 if (keyCode == Input.Keys.ENTER) {
-                    game.setScreen(new TitleScreen(game));
+                    game.setScreen(new TitleScreenOne(game));
                 }
 
                 return true;

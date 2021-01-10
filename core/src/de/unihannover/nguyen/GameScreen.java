@@ -57,6 +57,11 @@ public class GameScreen extends ScreenAdapter {
         runTime = runTime + delta;
         actualRender(runTime);
     }
+    
+    private void stuff() {
+        
+
+    }
 
 
     private void actualRender(float runTime) {

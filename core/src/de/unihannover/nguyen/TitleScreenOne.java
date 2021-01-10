@@ -11,11 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
-public class TitleScreen extends ScreenAdapter {
+public class TitleScreenOne extends ScreenAdapter {
 
     MyGdxGame game;
 
-    public TitleScreen(MyGdxGame game) {
+    public TitleScreenOne(MyGdxGame game) {
         this.game = game;
     }
 
@@ -77,3 +77,4 @@ public class TitleScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(null);
     }
 }
+
