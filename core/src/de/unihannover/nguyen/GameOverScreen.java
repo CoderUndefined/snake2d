@@ -47,3 +47,4 @@ public class GameOverScreen extends ScreenAdapter{
         Gdx.input.setInputProcessor(null);
     }
 }
+
