@@ -37,7 +37,7 @@ public class GameOverScreen extends ScreenAdapter{
                 Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
         game.font.draw(game.batch, "",
                 Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .5f);
-        game.font.draw(game.batch, "Press enter to restart.",
+        game.font.draw(game.batch, "Please Press enter to restart.",
                 Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .25f);
         game.batch.end();
     }
