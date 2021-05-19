@@ -8,15 +8,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
-
+/**
+ * Game screen that shows a representation of the GameThread.
+ * There is no actual game logic inside the game screen!
+ *
+ * But the input processing starts here
+ */
 public class GameScreen extends ScreenAdapter {
     MyGdxGame game;
     GameThread gameThread;
 
+    /**
+     * Basic constructor with the parent class to allow screen switching
+     * @param game parent class
+     */
     public GameScreen(MyGdxGame game) {
         this.game = game;
     }
 
+    /**
+     * Starts the GameThread and sets the input processing
+     */
     @Override
     public void show() {
         gameThread = new GameThread();
@@ -31,11 +43,30 @@ public class GameScreen extends ScreenAdapter {
         });
     }
 
+    /**
+     * Redirects to actualRender
+     *
+     * @param delta delta time, unused here.
+     */
     @Override
     public void render(float delta) {
         actualRender();
     }
 
+    /**
+     * Actually rendering the contents from the GameThread
+     *
+     * Empty space is represented by the BLACK background.
+     *
+     * Fill the space with a ShapeRenderer
+     *
+     * Player 1 is represented by RED squares
+     * Player 2 is represented by BLUE squares
+     *
+     * Food beacons are represented by GREEN squares. Only 1 exists at any given time.
+     *
+     * Switch to the GameOverScreen if the game thread has ended. Which happens if the game is over
+     */
     private void actualRender() {
         if(!gameThread.isActive()) {
             game.setScreen(new GameOverScreen(game));
@@ -74,6 +105,9 @@ public class GameScreen extends ScreenAdapter {
 
     }
 
+    /**
+     * Remove the input processor when hiding this screen
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);

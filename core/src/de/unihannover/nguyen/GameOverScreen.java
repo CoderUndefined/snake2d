@@ -6,14 +6,24 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 
+/**
+ * Very similar to the start screen
+ */
 public class GameOverScreen extends ScreenAdapter{
 
     MyGdxGame game;
 
+    /**
+     * Basic constructor with the parent class to allow screen switching
+     * @param game parent class
+     */
     public GameOverScreen(MyGdxGame game) {
         this.game = game;
     }
 
+    /**
+     * Initiates the screen. Also sets a basic InputListener, pressing ENTER resets the game
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -27,6 +37,11 @@ public class GameOverScreen extends ScreenAdapter{
         });
     }
 
+    /**
+     * Renders the text
+     *
+     * @param delta delta time, unused
+     */
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -42,6 +57,9 @@ public class GameOverScreen extends ScreenAdapter{
         game.batch.end();
     }
 
+    /**
+     * Remove the input processor when hiding this screen
+     */
     @Override
     public void hide(){
         Gdx.input.setInputProcessor(null);

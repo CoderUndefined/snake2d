@@ -11,14 +11,24 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
+/**
+ * Basic title screen with basic instructions on how to play the game
+ */
 public class TitleScreenOne extends ScreenAdapter {
 
     MyGdxGame game;
 
+    /**
+     * Basic constructor with the parent class to allow screen switching
+     * @param game parent class
+     */
     public TitleScreenOne(MyGdxGame game) {
         this.game = game;
     }
 
+    /**
+     * Initiates the screen. Also sets a basic InputListener, pressing SPACE starts the game
+     */
     @Override
     public void show() {
         Stage stage = new Stage();
@@ -35,6 +45,10 @@ public class TitleScreenOne extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Renders the text with the basic instructions
+     * @param delta delta time, unused
+     */
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -42,7 +56,7 @@ public class TitleScreenOne extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.font.draw(game.batch, "Snake42",
+        game.font.draw(game.batch, "SnakeFourTwo",
             Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
         game.font.draw(game.batch, "WASD for player 1, Arrow keys for player 2",
             Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .5f);
@@ -51,17 +65,13 @@ public class TitleScreenOne extends ScreenAdapter {
         game.batch.end();
     }
 
+    /**
+     * Remove the input processor when hiding this screen
+     */
     @Override
     public void hide(){
         Gdx.input.setInputProcessor(null);
     }
-
-    // abcdef
-    public void abc() {}
-
-
-
-
 }
 
 

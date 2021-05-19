@@ -5,6 +5,9 @@ import com.badlogic.gdx.Input;
 
 import java.util.LinkedList;
 
+/**
+ * Actual GameThread where all the game logic happens.
+ */
 public class GameThread extends Thread {
 
     boolean active = true;
@@ -20,11 +23,30 @@ public class GameThread extends Thread {
     Player player2;
 
 
+    /**
+     * Basic constructor. Should be started with Thread.start().
+     * In that case, first the initialize function is started which sets the Thread up
+     * Then the run loop starts.
+     */
     public GameThread() {
         super();
         initialize();
     }
 
+    /**
+     * Primary game loop.
+     *
+     * First try to move both snakes normally, with player inputs taken into accounts
+     *
+     * Then check for collision with other snakes or the game border
+     * If that happens then the thread will be stopped and the game ends
+     *
+     * If that did not happen then check if a beacon has been collected
+     * which will grow the snake by one segment that has eaten it.
+     * Place a new beacon then.
+     *
+     * Speed up the game very slightly at every cycle.
+     */
     @Override
     public void run() {
 
@@ -43,6 +65,7 @@ public class GameThread extends Thread {
             int x1next;
             int y1next;
 
+            // Handle player movement.
             if(player1.getPlayerDirection() == Player.Direction.UP) {
                 x1next = x1;
                 y1next = y1-1;
@@ -82,6 +105,7 @@ public class GameThread extends Thread {
                 x2next = x2+1;
                 y2next = y2;
             }
+            // Movement parts ends here
 
             player1collected = collectionCheck(x1next, y1next);
             player2collected = collectionCheck(x2next, y2next);
@@ -135,8 +159,11 @@ public class GameThread extends Thread {
                 map[player2.getTail().getX()][player2.getTail().getY()] = GameState.EMPTY;
             }
 
+
             // Case 3: Else
 
+
+            // Do speed up the game over time, but also put a limit so it wont get too fast
             speed = speed * 0.999;
             if(speed < 5.0) {
                 speed = 5.0;
@@ -161,6 +188,16 @@ public class GameThread extends Thread {
     }
 
     // Take account of "tail"
+
+    /**
+     * Check if the snake has collided with the borders or with any player
+     *
+     * @param xNext next x coordinate of snake
+     * @param yNext next y coordinate of snake
+     * @param collected1 player1 has collected food
+     * @param collected2 player2 has collected food
+     * @return true if there was a collision otherwise false.
+     */
     private boolean collisionCheck(int xNext, int yNext,
                                    boolean collected1, boolean collected2) {
         // Check if snake attempts to exit map.
@@ -188,6 +225,13 @@ public class GameThread extends Thread {
         else return false;
     }
 
+    /**
+     * Check if food was collected by a snake
+     *
+     * @param xNext next x coordinate of snake
+     * @param yNext next y coordinate of snake
+     * @return true if snake has collected food otherwise false
+     */
     private boolean collectionCheck(int xNext, int yNext) {
         if(xNext < 0 || xNext >= SIZE_X || yNext < 0 || yNext >= SIZE_Y) {
             return false;
@@ -199,6 +243,9 @@ public class GameThread extends Thread {
         else return false;
     }
 
+    /**
+     * Initialize the game map with 2 snakes of 8 length.
+     */
     private void initialize() {
 
         // initialize map
@@ -262,6 +309,9 @@ public class GameThread extends Thread {
         placeBeacon();
     }
 
+    /**
+     * Randomly place a beacon on the Map. Make sure that spot is empty!
+     */
     private void placeBeacon() {
 
 
@@ -282,12 +332,19 @@ public class GameThread extends Thread {
 
     }
 
+    /**
+     * Remove that beacon once its consumed
+     */
     private void removeBeacon() {
         int x = currentBeacon.getX();
         int y = currentBeacon.getY();
         map[x][y] = GameState.EMPTY;
     }
 
+    /**
+     * Handle the input passed from the InputProcessor from the GameScreen
+     * @param input user input as key press
+     */
     public void handleInput(int input) {
         switch (input) {
             case Input.Keys.W:
