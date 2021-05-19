@@ -43,15 +43,15 @@ public class GameThread extends Thread {
             int x1next;
             int y1next;
 
-            if(player1.getPlayerDirection() == Direction.UP) {
+            if(player1.getPlayerDirection() == Player.Direction.UP) {
                 x1next = x1;
                 y1next = y1-1;
             }
-            else if(player1.getPlayerDirection() == Direction.DOWN) {
+            else if(player1.getPlayerDirection() == Player.Direction.DOWN) {
                 x1next = x1;
                 y1next = y1+1;
             }
-            else if(player1.getPlayerDirection() == Direction.LEFT) {
+            else if(player1.getPlayerDirection() == Player.Direction.LEFT) {
                 x1next = x1-1;
                 y1next = y1;
             }
@@ -66,15 +66,15 @@ public class GameThread extends Thread {
             int x2next;
             int y2next;
 
-            if(player2.getPlayerDirection() == Direction.UP) {
+            if(player2.getPlayerDirection() == Player.Direction.UP) {
                 x2next = x2;
                 y2next = y2-1;
             }
-            else if(player2.getPlayerDirection() == Direction.DOWN) {
+            else if(player2.getPlayerDirection() == Player.Direction.DOWN) {
                 x2next = x2;
                 y2next = y2+1;
             }
-            else if(player2.getPlayerDirection() == Direction.LEFT) {
+            else if(player2.getPlayerDirection() == Player.Direction.LEFT) {
                 x2next = x2-1;
                 y2next = y2;
             }
@@ -109,29 +109,29 @@ public class GameThread extends Thread {
 
             // Case 2: Beacon collected, snake gets longer, new beacon placed
             if(player1collected) {
-                player1.getPlayerQueue().add(new Coordinate(x1next,y1next));
+                player1.getSnakeSegmentList().add(new Coordinate(x1next,y1next));
                 removeBeacon();
                 placeBeacon();
                 map[x1next][y1next] = GameState.ONE;
             }
             else {
-                player1.getPlayerQueue().add(new Coordinate(x1next,y1next));
+                player1.getSnakeSegmentList().add(new Coordinate(x1next,y1next));
                 map[x1next][y1next] = GameState.ONE;
-                player1.getPlayerQueue().removeFirst();
+                player1.getSnakeSegmentList().removeFirst();
                 map[player1.getTail().getX()][player1.getTail().getY()] = GameState.EMPTY;
 
             }
 
             if(player2collected) {
-                player2.getPlayerQueue().add(new Coordinate(x2next,y2next));
+                player2.getSnakeSegmentList().add(new Coordinate(x2next,y2next));
                 removeBeacon();
                 placeBeacon();
                 map[x2next][y2next] = GameState.TWO;
             }
             else {
-                player2.getPlayerQueue().add(new Coordinate(x2next,y2next));
+                player2.getSnakeSegmentList().add(new Coordinate(x2next,y2next));
                 map[x2next][y2next] = GameState.TWO;
-                player2.getPlayerQueue().removeFirst();
+                player2.getSnakeSegmentList().removeFirst();
                 map[player2.getTail().getX()][player2.getTail().getY()] = GameState.EMPTY;
             }
 
@@ -221,7 +221,7 @@ public class GameThread extends Thread {
         playerOneQueue.add(new Coordinate(5,4));
         playerOneQueue.add(new Coordinate(6,4));
         playerOneQueue.add(new Coordinate(7,4));
-        player1 = new Player(Direction.RIGHT, playerOneQueue);
+        player1 = new Player(Player.Direction.RIGHT, playerOneQueue);
 
         // put snake one
 //        map[0][4] = GameState.ONE;
@@ -245,7 +245,7 @@ public class GameThread extends Thread {
         playerTwoQueue.add(new Coordinate(26,14));
         playerTwoQueue.add(new Coordinate(25,14));
         playerTwoQueue.add(new Coordinate(24,14));
-        player2 = new Player(Direction.LEFT, playerTwoQueue);
+        player2 = new Player(Player.Direction.LEFT, playerTwoQueue);
 
         // put snake two
 //        map[31][14] = GameState.TWO;
@@ -292,36 +292,36 @@ public class GameThread extends Thread {
         switch (input) {
             case Input.Keys.W:
                 System.out.println("W pressed");
-                player1.steer(Direction.UP);
+                player1.steer(Player.Direction.UP);
                 break;
             case Input.Keys.S:
                 System.out.println("S pressed");
-                player1.steer(Direction.DOWN);
+                player1.steer(Player.Direction.DOWN);
                 break;
             case Input.Keys.A:
                 System.out.println("A pressed");
-                player1.steer(Direction.LEFT);
+                player1.steer(Player.Direction.LEFT);
                 break;
             case Input.Keys.D:
                 System.out.println("D pressed");
-                player1.steer(Direction.RIGHT);
+                player1.steer(Player.Direction.RIGHT);
                 break;
 
             case Input.Keys.UP:
                 System.out.println("UP");
-                player2.steer(Direction.UP);
+                player2.steer(Player.Direction.UP);
                 break;
             case Input.Keys.DOWN:
                 System.out.println("DOWN");
-                player2.steer(Direction.DOWN);
+                player2.steer(Player.Direction.DOWN);
                 break;
             case Input.Keys.LEFT:
                 System.out.println("LEFT");
-                player2.steer(Direction.LEFT);
+                player2.steer(Player.Direction.LEFT);
                 break;
             case Input.Keys.RIGHT:
                 System.out.println("RIGHT");
-                player2.steer(Direction.RIGHT);
+                player2.steer(Player.Direction.RIGHT);
                 break;
 
             default:

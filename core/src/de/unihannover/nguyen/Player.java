@@ -2,22 +2,41 @@ package de.unihannover.nguyen;
 
 import java.util.LinkedList;
 
+/**
+ * Class which represents the player snake
+ */
 class Player {
-    boolean playerUp = false;
-    boolean playerDown = false;
-    boolean playerLeft = false;
-    boolean playerRight = false;
+
+    /**
+     * Enumeartion indicating the direction
+     */
+    enum Direction {
+        LEFT, RIGHT, UP, DOWN
+    }
 
     Direction playerDirection; // default value
 
-    LinkedList<Coordinate> playerQueue;
+    LinkedList<Coordinate> snakeSegmentList;
 
 
-    public Player(Direction playerDirection, LinkedList<Coordinate> playerQueue) {
+    /**
+     * Constructor of the snake. Direction and the entire list of all used coordiantes are used.
+     *
+     * @param playerDirection the direction the player will be facing
+     * @param segList List containing all coordinates of the snake segments of the player
+     */
+    public Player(Direction playerDirection, LinkedList<Coordinate> segList) {
         this.playerDirection = playerDirection;
-        this.playerQueue = playerQueue;
+        this.snakeSegmentList = segList;
     }
 
+    /**
+     * Steers the player to another direction
+     * The direction should not be changed if its identical.
+     * It is also not possible to do a quick 180 turn on the spot
+     *
+     * @param nextDirection The next direction, as an enum
+     */
     public void steer(Direction nextDirection) {
         int xHead = getHead().getX();
         int yHead = getHead().getY();
@@ -28,6 +47,7 @@ class Player {
         System.out.println(xHead+";"+yHead);
         System.out.println(xBefore+";"+yBefore);
 
+        // the player should not be able to do a 180 turn on the spot
         if(xHead == xBefore && yHead-1 == yBefore &&
                 nextDirection == Direction.UP) {
 
@@ -62,76 +82,32 @@ class Player {
             System.out.println("GOING RIGHT");
             this.playerDirection = Direction.RIGHT;
         }
-
-
-
     }
 
 
     public Coordinate getCurrentPosition() {
-        return playerQueue.getLast();
+        return snakeSegmentList.getLast();
     }
 
 
     public Coordinate getTail() {
-        return playerQueue.getFirst();
+        return snakeSegmentList.getFirst();
     }
 
     public Coordinate getHead() {
-        return playerQueue.getLast();
+        return snakeSegmentList.getLast();
     }
 
     public Coordinate getBeforeHead() {
-        return playerQueue.get(playerQueue.size()-2);
-    }
-
-
-    public boolean isPlayerUp() {
-        return playerUp;
-    }
-
-    public void setPlayerUp(boolean playerUp) {
-        this.playerUp = playerUp;
-    }
-
-    public boolean isPlayerDown() {
-        return playerDown;
-    }
-
-    public void setPlayerDown(boolean playerDown) {
-        this.playerDown = playerDown;
-    }
-
-    public boolean isPlayerLeft() {
-        return playerLeft;
-    }
-
-    public void setPlayerLeft(boolean playerLeft) {
-        this.playerLeft = playerLeft;
-    }
-
-    public boolean isPlayerRight() {
-        return playerRight;
-    }
-
-    public void setPlayerRight(boolean playerRight) {
-        this.playerRight = playerRight;
+        return snakeSegmentList.get(snakeSegmentList.size()-2);
     }
 
     public Direction getPlayerDirection() {
         return playerDirection;
     }
 
-    public void setPlayerDirection(Direction playerDirection) {
-        this.playerDirection = playerDirection;
-    }
-
-    public LinkedList<Coordinate> getPlayerQueue() {
-        return playerQueue;
-    }
-
-    public void setPlayerQueue(LinkedList<Coordinate> playerQueue) {
-        this.playerQueue = playerQueue;
+    public LinkedList<Coordinate> getSnakeSegmentList() {
+        return snakeSegmentList;
     }
 
 }

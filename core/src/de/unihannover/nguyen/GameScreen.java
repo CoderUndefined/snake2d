@@ -10,16 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 
 
 public class GameScreen extends ScreenAdapter {
-
     MyGdxGame game;
     GameThread gameThread;
-
-    float circleX = 300;
-    float circleY = 150;
-    float circleRadius = 50;
-
-    float xSpeed = 4;
-    float ySpeed = 3;
 
     public GameScreen(MyGdxGame game) {
         this.game = game;
@@ -30,54 +22,27 @@ public class GameScreen extends ScreenAdapter {
         gameThread = new GameThread();
         gameThread.start();
 
-
         Gdx.input.setInputProcessor(new InputAdapter() {
-            @Override
-            public boolean touchDown(int x, int y, int pointer, int button) {
-                int renderY = Gdx.graphics.getHeight() - y;
-                if (Vector2.dst(circleX, circleY, x, renderY) < circleRadius) {
-                    game.setScreen(new EndScreen(game));
-                }
-                return true;
-            }
-
             @Override
             public boolean keyDown(int keycode) {
                 gameThread.handleInput(keycode);
-
                 return true;
             }
         });
     }
 
-    float runTime = 0.0f;
-
     @Override
     public void render(float delta) {
-        runTime = runTime + delta;
-        actualRender(runTime);
-    }
-    
-    private void stuff() {
-        
-
+        actualRender();
     }
 
-
-    private void actualRender(float runTime) {
-
+    private void actualRender() {
         if(!gameThread.isActive()) {
             game.setScreen(new GameOverScreen(game));
         }
-
         final int rectSize = 20*3;
 
-        // 18 is the game height. 1
-
         GameState[][] map = gameThread.getMap();
-        int xMax = gameThread.getSIZE_X();
-        int yMax = gameThread.getSIZE_Y();
-
 
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -92,74 +57,20 @@ public class GameScreen extends ScreenAdapter {
                         (18-1-y) * rectSize, rectSize, rectSize);
                 }
                 if(map[x][y] ==  GameState.TWO) {
-//                    game.shapeRenderer.setColor(0,0,1,1);
-//                    game.shapeRenderer.rect(x * rectSize,
-//                            (18-1-y) * rectSize, rectSize, rectSize);
-                    game.batch.draw(Assets.snakeSprite,
-                        x*rectSize,(18-1-y)*rectSize,rectSize,rectSize);
-//                    game.batch.draw(Assets.snakeSprite2,
-//                        15+x*rectSize,(18-1-y)*rectSize,rectSize,rectSize);
+                    game.shapeRenderer.setColor(0,0,1,1);
+                    game.shapeRenderer.rect(x * rectSize,
+                        (18-1-y) * rectSize, rectSize, rectSize);
                 }
                 if(map[x][y] ==  GameState.BEACON) {
                     game.shapeRenderer.setColor(0,1,0,1);
                     game.shapeRenderer.rect(x * rectSize,
                         (18-1-y) * rectSize, rectSize, rectSize);
                 }
-//                    game.shapeRenderer.circle(x*rectSize,y*rectSize,rectSize);
-            }
-        }
-
-        // experimental, comment please
-
-        for(int x = 0; x < gameThread.getSIZE_X(); x++) {
-            for(int y = 0; y < gameThread.getSIZE_Y(); y++) {
-                if(map[x][y] ==  GameState.TWO) {
-//                    game.shapeRenderer.setColor(0,0,1,1);
-//                    game.shapeRenderer.rect(x * rectSize,
-//                            (18-1-y) * rectSize, rectSize, rectSize);
-//                    game.batch.draw(Assets.snakeSprite,
-//                        x*rectSize,(18-1-y)*rectSize,rectSize,rectSize);
-
-                    // if too many objects spawn, its a CPU bottleneck, too many drawcalls?
-                    // can handle up to a million sprites?!
-
-                    for(int i = 0; i < 1; i++) {
-                        game.batch.setColor(1,1,1,0.5f);
-                        game.batch.draw(Assets.animation.getKeyFrame(runTime),
-                            i*0.01f+15+x*rectSize,
-                            i*0.01f+(18-1-y)*rectSize,
-                            rectSize,
-                            rectSize);
-                        game.batch.setColor(1,1,1,1f);
-                    }
-                }
-//                    game.shapeRenderer.circle(x*rectSize,y*rectSize,rectSize);
             }
         }
 
         game.batch.end();
         game.shapeRenderer.end();
-
-//
-//        circleX += xSpeed;
-//        circleY += ySpeed;
-//
-//        if (circleX < 0 || circleX > Gdx.graphics.getWidth()) {
-//            xSpeed *= -1;
-//        }
-//
-//        if (circleY < 0 || circleY > Gdx.graphics.getHeight()) {
-//            ySpeed *= -1;
-//        }
-//
-//        Gdx.gl.glClearColor(0, 0, .25f, 1);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//
-//        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//        game.shapeRenderer.setColor(0, 1, 0, 1);
-//        game.shapeRenderer.circle(circleX, circleY, 75);
-//        game.shapeRenderer.end();
-        System.out.println("FPS: "+Gdx.graphics.getFramesPerSecond());
 
     }
 
@@ -168,8 +79,3 @@ public class GameScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(null);
     }
 }
-
-
-// 18 -> 0
-// 17 -> 1
-//

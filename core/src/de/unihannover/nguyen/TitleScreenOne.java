@@ -21,16 +21,10 @@ public class TitleScreenOne extends ScreenAdapter {
 
     @Override
     public void show() {
-
-        Button button = new Button();
         Stage stage = new Stage();
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if(keycode == Input.Keys.E) {
-                    Gdx.graphics.setWindowedMode(1280,720);
-                    return true;
-                }
                 if(keycode == Input.Keys.SPACE) {
                     game.setScreen(new GameScreen(game));
                     return true;
@@ -38,25 +32,7 @@ public class TitleScreenOne extends ScreenAdapter {
                 return true;
             }
         });
-        button.setName("Button");
-
-        button.setSize(100,100);
-        button.setPosition(100,100);
-
-
-        stage.addActor(button);
-
         Gdx.input.setInputProcessor(stage);
-
-//        Gdx.input.setInputProcessor(new InputAdapter() {
-//            @Override
-//            public boolean keyDown(int keyCode) {
-//                if (keyCode == Input.Keys.SPACE) {
-//                    game.setScreen(new GameScreen(game));
-//                }
-//                return true;
-//            }
-//        });
     }
 
     @Override
@@ -66,11 +42,11 @@ public class TitleScreenOne extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.font.draw(game.batch, "Title Screen!",
+        game.font.draw(game.batch, "Snake42",
             Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .75f);
-        game.font.draw(game.batch, "Click the circle to win.",
+        game.font.draw(game.batch, "WASD for player 1, Arrow keys for player 2",
             Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .5f);
-        game.font.draw(game.batch, "Press space to play.",
+        game.font.draw(game.batch, "Eat food to grow. Try not to lose. Press space to play.",
             Gdx.graphics.getWidth() * .25f, Gdx.graphics.getHeight() * .25f);
         game.batch.end();
     }

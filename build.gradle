@@ -21,7 +21,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "JSnake"
-        gdxVersion = '1.9.11'
+        gdxVersion = '1.9.14'
         roboVMVersion = '2.3.10-SNAPSHOT'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -54,7 +54,7 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         
     }
