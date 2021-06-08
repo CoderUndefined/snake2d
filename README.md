@@ -4,7 +4,7 @@ This is a basic snake clone created with libgdx using Java. The only twist is th
 The first snake is controlled using WASD, the second snake is controlled using arrow keys.
 
 It can either be played with one to two players.
-![plot](./screenshot.png)
+![Screenshot](./screenshot.png)
 
 ## Quick Setup
 
