@@ -1,4 +1,4 @@
-# snake2D
+# snake2d
 
 This is a basic snake clone created with libgdx. The only twist is that two snakes are present instead of one. 
 The first snake is controlled using WASD, the second snake is controlled using arrow keys.
