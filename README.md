@@ -12,6 +12,7 @@ After cloning this repository change to its directory. Open the terminal/command
 Since this project uses libgdx it uses Gradle. 
 
 Run "gradlew build" to build this project.
+
 Run "gradlew dist" to build its jar. The jar can be found in ./snake2d/build/libs
 
 ## License 
